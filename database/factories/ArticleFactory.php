@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,13 @@ class ArticleFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => User::factory(),
+            'title' => $this->faker->sentence(),
+            'slug' => $this->faker->slug(4),
+            'image' => $this->faker->imageUrl(),
+            'content' => $this->faker->paragraph(10),
+            'published_at' => $this->faker->dateTimeBetween('-1 Week', '+1 Week'),
+            'featured'=>$this->faker->boolean(10),
         ];
     }
 }
