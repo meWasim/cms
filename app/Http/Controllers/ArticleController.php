@@ -13,7 +13,7 @@ class ArticleController extends Controller
         return view('articles.index',[
 'categories'=>Category::whereHas('articles',function($query){
     $query->published();
-})->take(10)->get()
+})->get()
 
         ]);
     }
