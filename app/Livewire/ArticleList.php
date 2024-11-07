@@ -14,7 +14,10 @@ class ArticleList extends Component
     use WithPagination;
     #[Url()]
     public $sort = 'desc';
+    #[Url()]
     public $search = '';
+    #[Url()]
+    public $category = '';
     public function setSort($sort)
     {
         $this->sort = ($sort === 'desc') ? 'desc' : 'asc';
@@ -28,7 +31,13 @@ class ArticleList extends Component
     #[Computed()]
     public function articles()
     {
-        return Article::published()->orderBy('published_at', $this->sort)->where('title','like',"%{$this->search}%")->paginate(5);
+        return Article::published()
+            ->when($this->category, function ($query) {
+                $query->withCategory($this->category);
+            })
+            ->where('title', 'like', "%{$this->search}%")
+            ->orderBy('published_at', $this->sort)
+            ->paginate(5);
     }
     public function render()
     {
