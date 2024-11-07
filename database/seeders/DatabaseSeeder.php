@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use App\Models\Article;
 use App\Models\Category;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,9 +21,28 @@ class DatabaseSeeder extends Seeder
         Category::factory(5)->create();
 
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // Create an Admin user
+        User::factory()->create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'password' => Hash::make('123456789'), // Change to a secure password
+            'role' => 'ADMIN',
+        ]);
+
+        // Create an Editor user
+        User::factory()->create([
+            'name' => 'Editor User',
+            'email' => 'editor@example.com',
+            'password' => Hash::make('123456789'), // Change to a secure password
+            'role' => 'EDITOR',
+        ]);
+
+        // Create a Guest user
+        User::factory()->create([
+            'name' => 'Guest User',
+            'email' => 'guest@example.com',
+            'password' => Hash::make('123456789'), // Change to a secure password
+            'role' => 'USER',
+        ]);
     }
 }
